@@ -5,6 +5,8 @@ const vscode = require('vscode');
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 
+
+
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -27,7 +29,7 @@ function activate(context) {
 				const structName = nearestStruct.structName;
 
 				// Insert the template with the struct name
-				const snippetText = `func (in *${structName}) ${structName.toLowerCase()}Method(\${2:args}) {\n\t$0\n}`;
+				const snippetText = `func (in *${structName}) \${1:method}(\${2:args}) \${3:return} {\n\t$0\n}`;
 				editor.insertSnippet(new vscode.SnippetString(snippetText), position);
 			}
 		}
@@ -35,7 +37,9 @@ function activate(context) {
 
 	// Register the command
 	context.subscriptions.push(insertTemplate);
+
 }
+
 
 function getNearestStructAboveCursor(document, position) {
 	for (let line = position.line - 1; line >= 0; line--) {
